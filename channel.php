@@ -1,4 +1,5 @@
 <?php
+// This file exists to make Facebook integration faster
  $cache_expire = 60*60*24*365;
  header("Pragma: public");
  header("Cache-Control: max-age=".$cache_expire);

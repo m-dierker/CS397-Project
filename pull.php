@@ -16,8 +16,6 @@ if (!in_array($_SERVER['HTTP_HOST'], $allowedDomains)) {
 
 $output = null;
 
-
-
 // Executes git pull to pull from master
 exec("/usr/bin/git pull", $output);
 

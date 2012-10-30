@@ -22,5 +22,5 @@ $output = null;
 // exec("/usr/bin/git pull", $output);
 
 foreach($output as $x) {
-    echo $x . "\n";
+    echo $x . "\n<br>\n";
 }

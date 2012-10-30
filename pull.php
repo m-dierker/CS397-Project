@@ -1,4 +1,10 @@
 <?php
-$output = array();
-echo exec("git pull", $output);
-echo 'Output: ' . print_r($output, true);
+
+$output = null;
+
+// Executes git pull to pull from master
+exec("/usr/bin/git pull", $output);
+
+foreach($output as $x) {
+    echo $x . "\n";
+}

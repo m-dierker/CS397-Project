@@ -42,7 +42,7 @@ for ($i = 1; $i <= $totalMachines; $i++) {
 	$laundryArray['Machine ' . $i] = findTimeLeft($fileData, $i);
 }
 
-echo $laundryArray;
+echo json_encode($laundryArray);
 
 
 ?>

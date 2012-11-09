@@ -9,13 +9,13 @@
     <meta name="author" content="Matthew Dierker, Brian Doherty">
 
     <!-- Le styles -->
-    <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
     </style>
-    <link href="/css/bootstrap/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="/lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="/css/site.css" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -40,6 +40,7 @@
         });
 
         // Additional initialization code such as adding Event Listeners goes here
+        window.site.setupFacebook();
 
       };
 
@@ -75,11 +76,25 @@
     <div class="container" id="main-container">
       <!-- Begin Content -->
 
-      <div class="valign-middle-wrap">
-        <div id="facebook-login" class="valign-middle">
+      <div id="facebook-loader" class="valign-middle-wrap">
+        <div class="valign-middle">
+          <img src="/img/loader.gif">
+        </div>
+      </div>
+
+      <div id="facebook-login" class="valign-middle-wrap hide">
+        <div class="valign-middle">
           <p>
-            <img src="http://placehold.it/300x40">
+            <fb:login-button size="large">Login with Facebook</fb:login-button>
           </p>
+        </div>
+      </div>
+
+
+
+      <div id="controls" class="hide">
+        <div class="well">
+          <a class="btn btn-small" href="#" id="add-widget-button"><i class="icon-plus"></i> Add a Widget</a>
         </div>
       </div>
 
@@ -89,7 +104,9 @@
     </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script src="/js/bootstrap/bootstrap.min/js"></script>
+    <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/Site.js"></script>
+    <script src="/js/Widget.js"></script>
 
   </body>
 </html>

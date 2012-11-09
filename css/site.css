@@ -22,3 +22,9 @@
 #facebook-login p {
     text-align: center;
 }
+
+#controls {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}

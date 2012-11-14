@@ -15,6 +15,7 @@
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
     </style>
+    <link href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" rel="stylesheet">
     <link href="/lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="/css/site.css" rel="stylesheet">
 
@@ -39,9 +40,12 @@
           xfbml      : true  // parse XFBML tags on this page?
         });
 
-        // Additional initialization code such as adding Event Listeners goes here
-        window.site.setupFacebook();
+        window.fbInitialized = true;
 
+        // Additional initialization code such as adding Event Listeners goes here
+        if(window.site) {
+          window.site.setupFacebook();
+        }
       };
 
       // Load the SDK's source Asynchronously
@@ -92,6 +96,7 @@
 
 
 
+
       <div id="controls" class="hide">
         <div class="well">
           <a class="btn btn-small" href="#" id="add-widget-button"><i class="icon-plus"></i> Add a Widget</a>
@@ -104,9 +109,11 @@
     </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="//code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
     <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
     <script src="/js/Site.js"></script>
     <script src="/js/Widget.js"></script>
+    <script src="/js/GlobalFunctions.js"></script>
 
   </body>
 </html>

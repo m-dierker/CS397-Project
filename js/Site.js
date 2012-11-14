@@ -3,6 +3,10 @@
  */
 function Site() {
     this.widgets = new Array();
+
+    if(window.fbInitialized) {
+        this.setupFacebook();
+    }
 }
 
 /**
@@ -43,8 +47,8 @@ Site.prototype.onLogout = function(response) {
  * Hides all widgets
  */
 Site.prototype.hideAllWidgets = function() {
-    for(int i = 0; i < this.widgets.length; i++) {
-        $(widgets[i]).hide();
+    for(var i = 0; i < this.widgets.length; i++) {
+        $(this.widgets[i]).hide();
     }
 }
 
@@ -66,16 +70,17 @@ Site.prototype.showLoginButton = function() {
  */
 Site.prototype.setupFacebook = function() {
 
-    // Listener
+    // Listener - This should also trigger it now.
     FB.Event.subscribe('auth.authResponseChange', this.onAuthChange.bind(this));
 
     // Trigger it now
-    FB.getLoginStatus(this.onAuthChange.bind(this));
+    // FB.getLoginStatus(this.onAuthChange.bind(this));
 };
 
 
 Site.prototype.addWidget = function() {
-    var widget = new Widget();
+    console.log("adding widget");
+    var widget = new Widget(this);
     widget.setSize(500,200);
 
     this.widgets.push(widget);
@@ -90,14 +95,21 @@ Site.prototype.logout = function() {
 
 
 /**
- * Sets up the control listeners, shows things relevant, will load widgets, etc.
+ * Sets up the control listeners, shows things relevant, will load widgets, etc. Called on login.
  */
 Site.prototype.setupDashboard = function() {
-
-    $('#add-widgets-button').click(this.addWidget.bind(this));
+    console.log("setting up dashboard");
+    $('#add-widget-button').click(this.addWidget.bind(this));
     $('#logout-button').click(this.logout.bind(this));
 
     $('#controls').fadeIn();
+};
+
+/**
+ * Returns a String with a new unique ID for a widget
+ */
+Site.prototype.getNewWidgetID = function() {
+    return GUID();
 };
 
 /**

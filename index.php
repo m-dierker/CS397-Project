@@ -95,8 +95,6 @@
       </div>
 
 
-
-
       <div id="controls" class="hide">
         <div class="well">
           <a class="btn btn-small" href="#" id="add-widget-button"><i class="icon-plus"></i> Add a Widget</a>

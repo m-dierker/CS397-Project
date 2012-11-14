@@ -1,3 +1,6 @@
+/**
+ * Main container
+ */
 #main-container {
     position: absolute;
     top: 60px;
@@ -6,11 +9,17 @@
     text-align: center;
 }
 
+/**
+ * Outer vertical align class
+ */
 .valign-middle-wrap {
     position:relative;
     height: inherit;
 }
 
+/**
+ * Inner vertical align class
+ */
 .valign-middle {
     position: absolute;
     top: 50%;
@@ -19,6 +28,27 @@
     width: 100%;
 }
 
+/**
+ * Facebook login text
+ */
 #facebook-login p {
     text-align: center;
+}
+
+/**
+ * Bottom right hand corner controls
+ */
+#controls {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+/**
+ * General widget
+ */
+.widget {
+    background-color: #aaa;
+    border-style: solid;
+    border-width: 2px;
 }

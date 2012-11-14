@@ -49,4 +49,6 @@
  */
 .widget {
     background-color: #aaa;
+    border-style: solid;
+    border-width: 2px;
 }

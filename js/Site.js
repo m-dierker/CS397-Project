@@ -14,9 +14,9 @@ function Site() {
  */
 Site.prototype.onAuthChange = function(response) {
     if(response.status === 'connected') {
-        this.onLogin();
+        this.onLogin(response);
     } else {
-        this.onLogout();
+        this.onLogout(response);
     }
 };
 
@@ -26,6 +26,10 @@ Site.prototype.onAuthChange = function(response) {
 Site.prototype.onLogin = function(response) {
     $('#facebook-loader').hide();
     $("#facebook-login").fadeOut();
+
+    this.ownerID = response.authResponse.userID;
+
+    this.getExistingWidgets();
 
     this.setupDashboard();
 }
@@ -37,10 +41,26 @@ Site.prototype.onLogout = function(response) {
     $('#facebook-loader').hide();
     $('#controls').hide();
 
+    this.ownerID = 0;
+
     this.clearWidgets();
 
     // This prevents the scrollbar from showing up because of two of the vertically aligned divs show at the same time
     setTimeout(this.showLoginButton, 100);
+};
+
+Site.prototype.getExistingWidgets = function() {
+    $.ajax({
+        url: '/php/db/getuserswidgets.php?id=' + this.ownerID,
+        success: function(data) {
+            console.log("Loading User Widgets");
+            console.log(data);
+            data = JSON.parse(data);
+            data.forEach(function(widget) {
+                console.log(widget);
+            }.bind(this));
+        }
+    });
 };
 
 /**

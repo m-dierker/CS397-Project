@@ -7,10 +7,16 @@ try
     $collection = $database->selectCollection('test');
     $js = "function() {
     return this.OwnerID == " . $_GET['id'] . "}";
-$cursor = $collection->find(array('$where' => $js));
-foreach ($cursor as $doc) {
-    echo json_encode($doc);
-}
+    $cursor = $collection->find(array('$where' => $js));
+
+    $results = array();
+    foreach ($cursor as $doc) {
+        $results[] = $doc;
+    }
+
+    echo json_encode($results);
+
+
 }
 catch(MongoConnectionException $e)
 {

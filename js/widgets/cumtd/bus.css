@@ -1,0 +1,19 @@
+.bus-results .bus-result .bus-route-name {
+    max-width: 150px;
+    min-width: 150px;
+    width: 150px;
+    margin: 0 20px;
+    font-size: 120%;
+    vertical-align: middle;
+    display: inline-block
+}
+
+.bus-results .bus-result .bus-route-expectedmin {
+    color: #3D00BF;
+    font-size: 200%;
+    vertical-align: middle;
+}
+
+.bus-results hr{
+    width: 400px;
+}

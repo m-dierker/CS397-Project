@@ -106,7 +106,7 @@
       <!-- End Content -->
     </div>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="//code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
     <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
     <script src="/js/Site.js"></script>

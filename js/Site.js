@@ -24,15 +24,22 @@ Site.prototype.onAuthChange = function(response) {
  * Called when the user is logged in and has connected to the app
  */
 Site.prototype.onLogin = function(response) {
-    $('#facebook-loader').hide();
-    $("#facebook-login").fadeOut();
-
     this.ownerID = response.authResponse.userID;
 
     this.getExistingWidgets();
 
     this.setupDashboard();
 }
+
+/**
+ * Widgets are setup, so time to show them to the user
+ */
+Site.prototype.finishLoading = function() {
+    $('#facebook-loader').hide();
+    $("#facebook-login").fadeOut();
+
+    $('#controls').fadeIn();
+};
 
 /**
  * Called if the user is logged out, or has not connected to the app
@@ -57,10 +64,23 @@ Site.prototype.getExistingWidgets = function() {
             console.log(data);
             data = JSON.parse(data);
             data.forEach(function(widget) {
-                console.log(widget);
+                this.addExistingWidget(widget);
             }.bind(this));
-        }
+
+            this.finishLoading();
+        }.bind(this)
     });
+};
+
+/**
+ * Adds an existing widget given a widget object from an AJAX request
+ * @param {object} widget an object containing the DB request
+ */
+Site.prototype.addExistingWidget = function(widget) {
+    var widget = new Widget(this, widget['_id']['$id'], widget['WidgetX'], widget['WidgetY'], widget['WidgetWidth'], widget['WidgetHeight'], ['WidgetType']);
+
+
+    this.pushWidget(widget);
 };
 
 /**
@@ -97,12 +117,22 @@ Site.prototype.setupFacebook = function() {
     // FB.getLoginStatus(this.onAuthChange.bind(this));
 };
 
-
-Site.prototype.addWidget = function() {
+/**
+ * Adds a new widget (so the user clicked the button, not from the DB)
+ */
+Site.prototype.addBlankWidget = function() {
     console.log("adding widget");
     var widget = new Widget(this);
     widget.setSize(500,200);
 
+    this.pushWidget(widget);
+};
+
+/**
+ * Adds a new widget to the widget list
+ * @param  {object} widget The new widget object
+ */
+Site.prototype.pushWidget = function(widget) {
     this.widgets.push(widget);
 };
 
@@ -119,10 +149,8 @@ Site.prototype.logout = function() {
  */
 Site.prototype.setupDashboard = function() {
     console.log("setting up dashboard");
-    $('#add-widget-button').click(this.addWidget.bind(this));
+    $('#add-widget-button').click(this.addBlankWidget.bind(this));
     $('#logout-button').click(this.logout.bind(this));
-
-    $('#controls').fadeIn();
 };
 
 /**

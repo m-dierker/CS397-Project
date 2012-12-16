@@ -111,6 +111,7 @@
     <script src="//code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
     <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
     <script src="/js/common/date.js"></script>
+    <script src="/js/common/datediff.js"></script>
 
     <!-- Our scripts -->
     <script src="/js/Site.js"></script>

@@ -19,11 +19,7 @@ window.onload = function() {
     }
 
     function getFormattedTime(time) {
-        // var date = Date.parse(time);
-        // time = '2012-12-16T12:12:00-06:00';
-        time = 'today';
         var date = Date.parse(time);
-        console.log(date);
 
         return date.toString('h:mm tt');
 

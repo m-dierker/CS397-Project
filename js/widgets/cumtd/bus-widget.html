@@ -26,7 +26,7 @@
     </select>
 
     <div class="bus-results">
-        <hr>
+        <hr class="top-line">
         <div class="bus-result">
             <span class="bus-route-name">
                 22N Illinihopper
@@ -34,17 +34,28 @@
             <span class="bus-route-expectedmin">
                 5 minutes
             </span>
-            <hr>
+            <div class="bus-pulldown">
+                <div class="bus-route-longname">
+                    <strong>Route: </strong><span class="bus-route-colored" style="color: #ff8f0f">Orangehopper</span>
+                </div>
+                <span class="bus-scheduled">
+                    <strong>Scheduled:</strong> 10:45 AM
+                </span>
+                <span class="bus-expected">
+                    <strong>Expected:</strong> 10:45 AM
+                </span>
+            </div>
         </div>
+        <hr>
     </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="//code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
     <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/common/date.js"></script>
     <script src="/js/Site.js"></script>
     <script src="/js/Widget.js"></script>
     <script src="/js/GlobalFunctions.js"></script>
-
     <script src="bus.js"></script>
   </body>
 </html>

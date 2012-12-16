@@ -106,12 +106,17 @@
       <!-- End Content -->
     </div>
 
+    <!-- JS Libraries -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="//code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
     <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/common/date.js"></script>
+
+    <!-- Our scripts -->
     <script src="/js/Site.js"></script>
     <script src="/js/Widget.js"></script>
     <script src="/js/GlobalFunctions.js"></script>
 
+    <!-- Add Widgets Here -->
   </body>
 </html>

@@ -46,18 +46,19 @@ body {
     position: fixed;
     bottom: 0;
     right: 0;
-    -webkit-transform: rotate(0deg);
-    -webkit-transition: all .5s ease-in-out;
 }
 
 /* Icon Rotation */
+#controls i {
+    -webkit-transition: all .5s ease;
+}
+
 #controls:hover i{
     -webkit-transform: rotate(-90deg);
-    -webkit-transition: all .5s ease-in-out;
 }
 
 #controls-hidden {
-    margin-bottom:;
+    margin-bottom: 10px;
 }
 
 /**
@@ -67,8 +68,4 @@ body {
     background-color: #fff;
     border-style: solid;
     border-width: 2px;
-}
-
-.widget.ui-state-disabled {
-    /*opacity: 1;*/
 }

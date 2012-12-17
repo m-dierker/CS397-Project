@@ -103,7 +103,7 @@ Site.prototype.setupFacebook = function() {
     FB.Event.subscribe('auth.authResponseChange', this.onAuthChange.bind(this));
 
     // Trigger it now
-    // FB.getLoginStatus(this.onAuthChange.bind(this));
+    FB.getLoginStatus(this.onAuthChange.bind(this));
 };
 
 /**

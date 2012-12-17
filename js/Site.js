@@ -57,6 +57,13 @@ Site.prototype.onLogout = function(response) {
 };
 
 Site.prototype.getExistingWidgets = function() {
+
+    if (this.widgetsRequested) {
+        return;
+    }
+
+    this.widgetsRequested = true;
+
     $.ajax({
         url: '/php/db/getuserswidgets.php?id=' + this.ownerID,
         success: function(data) {
@@ -180,6 +187,14 @@ Site.prototype.logout = function() {
  * Sets up the control listeners, shows things relevant, will load widgets, etc. Called on login.
  */
 Site.prototype.setupDashboard = function() {
+
+    if (this.dashboardSetup) {
+        return;
+    }
+
+    console.log("Setting up dashboard");
+
+    this.dashboardSetup = true;
 
     // Hidden controls come in when the add widget button is hovered n
     $('#add-widget-button').hover(function() {

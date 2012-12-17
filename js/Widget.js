@@ -1,10 +1,22 @@
 /**
  * Construct a widget given a bunch of data about that widget. This could either have just the site (new widget), or all of the parameters (loaded from the DB).
  */
-function Widget(site, id, x, y, width, height, type) {
+function Widget() {
+
+}
+
+Widget.prototype.setupWidget = function(site, id, db_data, type) {
     this.site = site;
 
     var newWidget = false;
+
+    // Blank Widget Memory
+    this.mem = {};
+
+    var x = db_data['WidgetX'];
+    var y = db_data['WidgetY'];
+    var width = db_data['WidgetWidth'];
+    var height = db_data['WidgetHeight'];
 
     if(id === undefined) {
         // We could just be constructing with a site, so this should fill in defaults (this is a new widget as opposed to one from the DB)
@@ -18,7 +30,6 @@ function Widget(site, id, x, y, width, height, type) {
         height = 100;
         x = 50;
         y = 20;
-        type = 0;
 
     } else {
         this.hasID = true;
@@ -44,7 +55,7 @@ function Widget(site, id, x, y, width, height, type) {
     if (newWidget) {
         this.updateWidget();
     }
-}
+};
 
 /**
  * Makes the widget's div fit to be a widget
@@ -102,7 +113,7 @@ Widget.prototype.updateWidget = function() {
 
     if(!this.hasID) {
         // Add a new widget
-        $.ajax('/php/db/addwidget.php?WidgetType=0&OwnerID=' + this.site.ownerID + '&WidgetX=' + this.getX() + '&WidgetY=' + this.getY() + '&WidgetWidth=' + this.getWidth() + '&WidgetHeight=' + this.getHeight(), {
+        $.ajax('/php/db/addwidget.php?WidgetType=0&OwnerID=' + this.site.ownerID + '&WidgetX=' + this.getX() + '&WidgetY=' + this.getY() + '&WidgetWidth=' + this.getWidth() + '&WidgetHeight=' + this.getHeight() + this.getWidgetMemForURL(), {
                 success: function(data) {
                     data = JSON.parse(data);
                     this.setID(data['_id']['$id']);
@@ -112,7 +123,7 @@ Widget.prototype.updateWidget = function() {
 
         this.hasID = true;
     } else {
-        $.ajax('/php/db/updatewidget.php?id=' + this.id +  '&WidgetType=0&OwnerID=' + this.site.ownerID + '&WidgetX=' + this.getX() + '&WidgetY=' + this.getY() + '&WidgetWidth=' + this.getWidth() + '&WidgetHeight=' + this.getHeight(), {
+        $.ajax('/php/db/updatewidget.php?id=' + this.id +  '&WidgetType=0&OwnerID=' + this.site.ownerID + '&WidgetX=' + this.getX() + '&WidgetY=' + this.getY() + '&WidgetWidth=' + this.getWidth() + '&WidgetHeight=' + this.getHeight() + this.getWidgetMemForURL(), {
                 success: function(data) {
                     console.log("Successful AJAX update for widget ID " + this.id);
                 }.bind(this)
@@ -121,6 +132,12 @@ Widget.prototype.updateWidget = function() {
 }
 
 
+Widget.prototype.getWidgetMemForURL = function() {
+    var ret = '';
+    for (var prop in this.mem) {
+        ret += '&' + prop + '=' + this.mem[prop];
+    }
+};
 
 
 Widget.prototype.setID = function(newID) {

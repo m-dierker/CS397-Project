@@ -77,10 +77,9 @@ Site.prototype.getExistingWidgets = function() {
  * @param {object} widget an object containing the DB request
  */
 Site.prototype.addExistingWidget = function(widget) {
-    var widget = new Widget(this, widget['_id']['$id'], widget['WidgetX'], widget['WidgetY'], widget['WidgetWidth'], widget['WidgetHeight'], ['WidgetType']);
+    var newWidget = new Widget(this, widget['_id']['$id'], widget, ['WidgetType']);
 
-
-    this.pushWidget(widget);
+    this.pushWidget(newWidget);
 };
 
 /**
@@ -128,6 +127,24 @@ Site.prototype.addBlankWidget = function() {
     this.pushWidget(widget);
 };
 
+Site.prototype.addNewWidgetWithType = function(type) {
+    type = parseInt(type);
+
+    var widget;
+
+    switch(type) {
+        case 1: // bus widget
+            widget = new Bus(this);
+            widget.setSize(500, 500);
+            break;
+        default:
+            console.err("Invalid widget type specified: " + type);
+    }
+
+    this.pushWidget(widget);
+
+};
+
 /**
  * Adds a new widget to the widget list
  * @param  {object} widget The new widget object
@@ -148,8 +165,25 @@ Site.prototype.logout = function() {
  * Sets up the control listeners, shows things relevant, will load widgets, etc. Called on login.
  */
 Site.prototype.setupDashboard = function() {
-    console.log("setting up dashboard");
-    $('#add-widget-button').click(this.addBlankWidget.bind(this));
+
+    // Hidden controls come in when the add widget button is hovered n
+    $('#add-widget-button').hover(function() {
+
+        $('#controls-hidden').show("slide", {direction: "down"}, 200);
+
+    }, function() {});
+
+    // and they fade out when #controls is no longer hovered
+    $('#controls').hover(function() {}, function() {
+        $('#controls-hidden').hide("slide", {direction: "down"}, 200);
+    });
+
+    // Hook all buttons adding a widget given a type
+    $('#controls a.add-widget').click(function(e) {
+        var type = $(e.srcElement).attr("widget-type");
+        this.addNewWidgetWithType(type);
+    }.bind(this));
+
     $('#logout-button').click(this.logout.bind(this));
 };
 

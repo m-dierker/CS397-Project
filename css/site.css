@@ -46,13 +46,25 @@ body {
     position: fixed;
     bottom: 0;
     right: 0;
+    -webkit-transform: rotate(0deg);
+    -webkit-transition: all .5s ease-in-out;
+}
+
+/* Icon Rotation */
+#controls:hover i{
+    -webkit-transform: rotate(-90deg);
+    -webkit-transition: all .5s ease-in-out;
+}
+
+#controls-hidden {
+    margin-bottom: 10px;
 }
 
 /**
  * General widget
  */
 .widget {
-    background-color: #aaa;
+    background-color: #fff;
     border-style: solid;
     border-width: 2px;
 }

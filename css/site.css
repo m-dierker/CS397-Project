@@ -57,7 +57,7 @@ body {
 }
 
 #controls-hidden {
-    margin-bottom: 10px;
+    margin-bottom:;
 }
 
 /**
@@ -67,4 +67,8 @@ body {
     background-color: #fff;
     border-style: solid;
     border-width: 2px;
+}
+
+.widget.ui-state-disabled {
+    /*opacity: 1;*/
 }

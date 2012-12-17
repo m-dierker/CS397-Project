@@ -57,10 +57,28 @@ Widget.prototype.setupWidget = function(site, id, db_data, type) {
 
     this.makeResizeable();
     this.makeDraggable();
+    setTimeout(this.addScrollListener.bind(this), 500);
 
     if (newWidget) {
-        this.updateWidget();
+        // Need to let the DOM settle first
+        this.updateWidgetIn(1000);
     }
+};
+
+/**
+ * There's a very annoying bug with JQuery UI and scrolling. If you click the scrollbar, the window gets stuck to the mouse, and there's no way to get it off. So you can scroll, and as you move the mouse afterwards, the widget went with it. This is problematic for obvious reasons. So every time the user scrolls, we have to completely destroy the draggable stuff and re-add it 50ms (random number that works) later. This is really annoying, but the only workarounds suggested are to only allow dragging of the title bar. But we don't have a title bar. So this is stupid but it works.
+ */
+Widget.prototype.addScrollListener = function() {
+    $(this.widget).find('.bus-results').scroll(function() {
+
+        $(this.widget).draggable("destroy");
+
+        if(this.draggableEnableTimer !== null) {
+            clearTimeout(this.draggableEnableTimer);
+        }
+
+        this.draggableEnableTimer = setTimeout(this.makeDraggable.bind(this), 50);
+    }.bind(this));
 };
 
 /**
@@ -161,7 +179,9 @@ Widget.prototype.getWidth = function() {
 };
 
 Widget.prototype.getHeight = function() {
-    return $(this.widget).height();
+    var height = $(this.widget).height();
+    console.log("Height is " + height);
+    return height;
 };
 
 Widget.prototype.getX = function() {
@@ -176,9 +196,18 @@ Widget.prototype.getY = function() {
  * Sets the size of the widget
  */
 Widget.prototype.setSize = function(width, height) {
+    console.log("Setting size to " + width + " x " + height);
+    this._width = width;
+    this._height = height;
     $(this.widget).width(width).height(height);
 };
 
+/**
+ * Can be called after an append() statement that changes the widget size
+ */
+Widget.prototype.setToCorrectSize = function() {
+    this.setSize(this._width, this._height);
+};
 Widget.prototype.setPosition = function(data) {
     $(this.widget).offset(data);
 };

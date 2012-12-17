@@ -18,6 +18,7 @@
     <link href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" rel="stylesheet">
     <link href="/lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="/css/site.css" rel="stylesheet">
+    <link href="/js/widgets/cumtd/bus.css" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -122,6 +123,6 @@
     <script src="/js/GlobalFunctions.js"></script>
 
     <!-- Add Widgets Here -->
-    <script src="/js/widgets/cumtd/Bus.js"></script>
+    <script src="/js/widgets/cumtd/bus.js"></script>
   </body>
 </html>

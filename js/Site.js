@@ -73,16 +73,6 @@ Site.prototype.getExistingWidgets = function() {
 };
 
 /**
- * Adds an existing widget given a widget object from an AJAX request
- * @param {object} widget an object containing the DB request
- */
-Site.prototype.addExistingWidget = function(widget) {
-    var newWidget = new Widget(this, widget['_id']['$id'], widget, ['WidgetType']);
-
-    this.pushWidget(newWidget);
-};
-
-/**
  * Hides all widgets
  */
 Site.prototype.hideAllWidgets = function() {
@@ -127,6 +117,10 @@ Site.prototype.addBlankWidget = function() {
     this.pushWidget(widget);
 };
 
+/**
+ * Adds a brand new widget with a given type
+ * @param {int} type The type of widget to add
+ */
 Site.prototype.addNewWidgetWithType = function(type) {
     type = parseInt(type);
 
@@ -134,15 +128,36 @@ Site.prototype.addNewWidgetWithType = function(type) {
 
     switch(type) {
         case 1: // bus widget
-            widget = new Bus(this);
+            widget = new Bus(this, undefined, {});
             widget.setSize(500, 500);
             break;
         default:
-            console.err("Invalid widget type specified: " + type);
+            console.log("Invalid widget type specified: " + type);
     }
 
     this.pushWidget(widget);
 
+};
+
+/**
+ * Adds an existing widget given a widget object from an AJAX request
+ * @param {object} widget an object containing the DB request
+ */
+Site.prototype.addExistingWidget = function(data) {
+    var type = parseInt(data['WidgetType']);
+    var id = data['_id']['$id'];
+
+    var widget;
+
+    switch(type) {
+        case 1: // bus widget
+            widget = new Bus(this, id, data, type);
+            break;
+        default:
+            console.log("Invalid widget type specified: " + type);
+    }
+
+    this.pushWidget(widget);
 };
 
 /**

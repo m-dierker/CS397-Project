@@ -8,15 +8,18 @@ function Widget() {
 Widget.prototype.setupWidget = function(site, id, db_data, type) {
     this.site = site;
 
+    this.widgetType = type;
+
     var newWidget = false;
 
     // Blank Widget Memory
     this.mem = {};
 
-    var x = db_data['WidgetX'];
-    var y = db_data['WidgetY'];
-    var width = db_data['WidgetWidth'];
-    var height = db_data['WidgetHeight'];
+
+    var x;
+    var y;
+    var width;
+    var height;
 
     if(id === undefined) {
         // We could just be constructing with a site, so this should fill in defaults (this is a new widget as opposed to one from the DB)
@@ -26,13 +29,18 @@ Widget.prototype.setupWidget = function(site, id, db_data, type) {
         id = this.site.getNewWidgetID();
         this.hasID = false;
 
-        width = 100;
-        height = 100;
         x = 50;
-        y = 20;
+        y = 50;
 
-    } else {
+    } else { // loading from the DB
         this.hasID = true;
+
+        x = db_data['WidgetX'];
+        y = db_data['WidgetY'];
+        width = db_data['WidgetWidth'];
+        height = db_data['WidgetHeight'];
+
+        this.setSize(width, height);
     }
 
     this.id = id;
@@ -44,8 +52,6 @@ Widget.prototype.setupWidget = function(site, id, db_data, type) {
     document.body.appendChild(widget);
 
     this.makeDivWidget();
-
-    this.setSize(width, height);
 
     this.setPosition({left: x, top: y});
 
@@ -80,12 +86,16 @@ Widget.prototype.makeResizeable = function() {
 Widget.prototype.makeDraggable = function() {
     $(this.widget).draggable({
         stack: '.widget',
+        start: function() {
+            $(this).addClass('noclick');
+        },
         drag: function() {
             this.updateWidgetIn(100);
         }.bind(this),
-        stop: function() {
+        stop: function(e) {
             this.updateWidgetIn(100);
-        }.bind(this)
+        }.bind(this),
+        distance: 30
     });
 };
 
@@ -113,7 +123,7 @@ Widget.prototype.updateWidget = function() {
 
     if(!this.hasID) {
         // Add a new widget
-        $.ajax('/php/db/addwidget.php?WidgetType=0&OwnerID=' + this.site.ownerID + '&WidgetX=' + this.getX() + '&WidgetY=' + this.getY() + '&WidgetWidth=' + this.getWidth() + '&WidgetHeight=' + this.getHeight() + this.getWidgetMemForURL(), {
+        $.ajax('/php/db/addwidget.php?WidgetType=' + this.widgetType + '&OwnerID=' + this.site.ownerID + '&WidgetX=' + this.getX() + '&WidgetY=' + this.getY() + '&WidgetWidth=' + this.getWidth() + '&WidgetHeight=' + this.getHeight() + this.getWidgetMemForURL(), {
                 success: function(data) {
                     data = JSON.parse(data);
                     this.setID(data['_id']['$id']);
@@ -123,7 +133,7 @@ Widget.prototype.updateWidget = function() {
 
         this.hasID = true;
     } else {
-        $.ajax('/php/db/updatewidget.php?id=' + this.id +  '&WidgetType=0&OwnerID=' + this.site.ownerID + '&WidgetX=' + this.getX() + '&WidgetY=' + this.getY() + '&WidgetWidth=' + this.getWidth() + '&WidgetHeight=' + this.getHeight() + this.getWidgetMemForURL(), {
+        $.ajax('/php/db/updatewidget.php?id=' + this.id + '&OwnerID=' + this.site.ownerID + '&WidgetX=' + this.getX() + '&WidgetY=' + this.getY() + '&WidgetWidth=' + this.getWidth() + '&WidgetHeight=' + this.getHeight() + this.getWidgetMemForURL(), {
                 success: function(data) {
                     console.log("Successful AJAX update for widget ID " + this.id);
                 }.bind(this)
@@ -137,6 +147,7 @@ Widget.prototype.getWidgetMemForURL = function() {
     for (var prop in this.mem) {
         ret += '&' + prop + '=' + this.mem[prop];
     }
+    return ret;
 };
 
 

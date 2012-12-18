@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Weather Widget</title>
+    <!-- Le styles -->
+    <link href="http://my.eatcumtd.com/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" rel="stylesheet">
+    <link href="http://my.eatcumtd.com/lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="http://my.eatcumtd.com/css/site.css" rel="stylesheet">
+   <script type="text/javascript" src = "http://code.jquery.com/jquery-1.8.3.min.js"></script>
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+    function addData(tableID, itemDesc, itemData)
+    {
+      var table = document.getElementById(tableID);
+      var rowCount = table.rows.length;
+      var rowAdded = table.insertRow(rowCount);
+      var numberCell = rowAdded.insertCell(0);
+      numberCell.innerHTML = itemDesc;
+      var statusCell = rowAdded.insertCell(1);
+      statusCell.innerHTML = itemData;
+    }
+    function loadWeather(tableID)
+    {
+      $.ajax({
+  url : "http://api.wunderground.com/api/abd4d450a140ae7a/geolookup/conditions/q/IL/Champaign.json",
+  dataType : "jsonp",
+  success : function(parsed_json) {
+  var location = parsed_json['location']['city'];
+  var weatherType = parsed_json['current_observation']['weather'];
+  var temp_f = parsed_json['current_observation']['temp_f'];
+  var wind = parsed_json['current_observation']['wind_string'];
+  var humidity = parsed_json['current_observation']['relative_humidity'];
+
+    addData(tableID, "Location", location);
+    addData(tableID, "Current Temp", temp_f);
+    addData(tableID, "Current Weather", weatherType);
+    addData(tableID, "Current Wind", wind);
+    addData(tableID, "Current Humidity", humidity);
+
+    $('#weatherimage').attr('src', parsed_json['current_observation']['icon_url']);
+  }
+  });
+    }
+    $(document).ready(function() {
+      loadWeather("weathertable");
+    });
+    </script>
+  </head>
+
+  <body>
+<img src = "" alt="some_text" id = "weatherimage"></img>
+    <table class="table table-striped" id = "weathertable">
+
+    </table>
+  </body>
+  </html>

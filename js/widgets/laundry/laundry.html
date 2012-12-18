@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Laundry Widget</title>
+    <!-- Le styles -->
+    <link href="http://my.eatcumtd.com/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" rel="stylesheet">
+    <link href="http://my.eatcumtd.com/lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="http://my.eatcumtd.com/css/site.css" rel="stylesheet">
+   <script type="text/javascript" src = "http://code.jquery.com/jquery-1.8.3.min.js"></script>
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+    function addMachine(tableID, machineNumber, machineStatus)
+    {
+      var table = document.getElementById("laundrytable");
+      var rowCount = table.rows.length;
+      var rowAdded = table.insertRow(rowCount);
+      var numberCell = rowAdded.insertCell(0);
+      numberCell.innerHTML = machineNumber;
+      var statusCell = rowAdded.insertCell(1);
+      statusCell.innerHTML = machineStatus;
+    }
+    function clearRows(tableID)
+    {
+      var table = document.getElementById("laundrytable");
+      var rowCount = table.rows.length;
+      for (var i = 1; i < rowCount; i++)
+      {
+        table.deleteRow(i);
+      }
+    }
+    function loadHall(tableID, hall)
+    {
+      $.getJSON("http://bdoherty.net/php/gethalllaundry.php?hall=" + hall,
+        function(data) {
+          $.each(data, function(key, value)
+          {
+              addMachine("laundrytable", key, value);
+          });
+        });
+    }
+    function hallChanged(tableID, select)
+    {
+      clearRows(tableID)
+      loadHall(tableID, select.value);
+    }
+    </script>
+  </head>
+
+  <body>
+
+<select id = "hallSelect" onchange = 'hallChanged("laundrytable", this)'>
+  <option value="Forbes">Forbes</option>
+  <option value="Nugent">Nugent</option>
+  <option value="Snyder">Snyder</option>
+</select>
+    <table class="table table-striped" id = "laundrytable">
+      <tr>
+        <th>
+          Machine Number
+        </th>
+        <th>
+          Machine Status
+        </th>
+      </tr>
+    </table>
+  </body>
+  </html>

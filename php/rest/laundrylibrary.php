@@ -2,7 +2,7 @@
 
 function findTimeLeft($data, $washerNumber) {
 	$input =  "sans-serif\">                  " . $washerNumber . " ";
-	$data = preg_replace("/[\n\r]/","",$data); 
+	$data = preg_replace("/[\n\r]/","",$data);
 	$startingPos = stripos($data, $input); + strlen($input);
 	for ($i = 0; $i < 3; $i++) {
 		$startingPos = stripos($data, "sans-serif\">", $startingPos) + 13;
@@ -14,7 +14,7 @@ function findTimeLeft($data, $washerNumber) {
 	}
 	$availableString = strip_tags($availableString);
 	return trim($availableString);
-}	
+}
 
 function getHallData($hall)
 {

@@ -138,6 +138,10 @@ Site.prototype.addNewWidgetWithType = function(type) {
             widget = new Bus(this, undefined, {});
             widget.setSize(500, 500);
             break;
+        case 2: // laundry widget
+            widget = new Laundry(this, undefined, {});
+            widget.setSize(300, 500);
+            break;
         default:
             console.log("Invalid widget type specified: " + type);
     }
@@ -159,6 +163,9 @@ Site.prototype.addExistingWidget = function(data) {
     switch(type) {
         case 1: // bus widget
             widget = new Bus(this, id, data, type);
+            break;
+        case 2: // laundry widget
+            widget = new Laundry(this, id, data, type);
             break;
         default:
             console.log("Invalid widget type specified: " + type);

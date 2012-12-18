@@ -21,6 +21,7 @@
     <link href="/css/common/alertify.default.css" rel="stylesheet">
     <link href="/css/site.css" rel="stylesheet">
     <link href="/js/widgets/cumtd/bus.css" rel="stylesheet">
+    <link href="/js/widgets/laundry/laundry.css" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -101,7 +102,9 @@
       <div id="controls" class="hide">
         <div class="well">
           <div id="controls-hidden" class="hide">
-            <a class="btn btn-small add-widget" widget-type="1" href="#" id="add-bus-widget-button"><i class="icon-plus" widget-type="1"></i>Bus Transit</a>
+            <a class="btn btn-small add-widget" widget-type="2" href="#"><i class="icon-tint" widget-type="2"></i>Laundry Monitor</a>
+            <br>
+            <a class="btn btn-small add-widget" widget-type="1" href="#" id="add-bus-widget-button"><i class="icon-road" widget-type="1"></i>Bus Transit</a>
           </div>
           <a class="btn btn-small" href="#" id="add-widget-button"><i class=" icon-arrow-right"></i> Add a Widget</a>
         </div>
@@ -128,5 +131,6 @@
 
     <!-- Add Widgets Here -->
     <script src="/js/widgets/cumtd/bus.js"></script>
+    <script src="/js/widgets/laundry/laundry.js"></script>
   </body>
 </html>

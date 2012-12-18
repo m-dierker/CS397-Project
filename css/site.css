@@ -54,17 +54,21 @@ body {
     z-index: 1000;
 }
 
+#controls-hidden a {
+    margin-bottom: 5px;
+}
+
 /* Icon Rotation */
-#controls i {
+#controls i.icon-arrow-right {
     -webkit-transition: all .5s ease;
 }
 
-#controls:hover i{
+#controls:hover a i.icon-arrow-right {
     -webkit-transform: rotate(-90deg);
 }
 
 #controls-hidden {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 /**

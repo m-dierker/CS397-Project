@@ -15,8 +15,10 @@ function Site() {
 Site.prototype.onAuthChange = function(response) {
     if(response.status === 'connected') {
         this.onLogin(response);
+        console.log("hi");
     } else {
         this.onLogout(response);
+        console.log("test");
     }
 };
 
@@ -86,7 +88,11 @@ Site.prototype.getExistingWidgets = function() {
  * Hides all widgets
  */
 Site.prototype.hideAllWidgets = function() {
-    $('.widget').remove();
+    $('.widget').fadeOut();
+    setTimeout(function() {
+        $('.widget').remove();
+        this.getExistingWidgets();
+    }.bind(this), 400);
 }
 
 /**
@@ -246,7 +252,7 @@ Site.prototype.flipDesktops = function() {
 
     this.widgetsRequested = false;
 
-    this.getExistingWidgets();
+    // this.getExistingWidgets();
 
 };
 

@@ -8,7 +8,7 @@ try
     $connection = new Mongo('mongodb://cs397:cinda@ds041387.mongolab.com:41387/testmongo');
     $database   = $connection->selectDB('testmongo');
     $collection = $database->selectCollection('test');
-    $collection->remove(array('_id' => new MongoId($id)), true);
+    $collection->remove(array('_id' => new MongoId($id)));
     echo "Removed item: " . $id;
 }
 catch(MongoConnectionException $e)

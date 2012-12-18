@@ -57,9 +57,6 @@ Bus.prototype.loadStopsForID = function(name, id) {
         }.bind(this));
 
         this.setToCorrectSize();
-        // setTimeout(function() {
-
-        // }.bind(this), 200);;
     }.bind(this));
 }
 
@@ -80,7 +77,7 @@ Bus.prototype.updateWaitingTimes = function() {
 
         // It's possible for the bus system to predict less minutes than the time would say. In that event, we're going to go with the bus system.
         if(parseInt($(expectedMin).text()) > diff) {
-            $(this).find('.bus-route-expectedmin').text(diff + " minutes");
+            $(this).find('.bus-route-expectedmin').text(diff + (diff == 1 ? "minute" : " minutes"));
         }
     });
 }
@@ -114,7 +111,7 @@ Bus.prototype.cleanup = function() {
  * Deletes all bus results
  */
 Bus.prototype.clearResults = function() {
-    $(this.widget).find('.bus-results .bus-result').remove();
+    $(this.widget).find('.bus-results .bus-result, .bus-results hr:not([class="bus-top-line"])').remove();
 }
 
 /**

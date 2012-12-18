@@ -11,6 +11,7 @@ Widget.prototype.setupWidget = function(site, id, db_data, type) {
     this.widgetType = type;
 
     var newWidget = false;
+    this.widgetAdded = false;
 
     // Blank Widget Memory
     this.mem = {};
@@ -77,7 +78,7 @@ Widget.prototype.addScrollListener = function() {
             clearTimeout(this.draggableEnableTimer);
         }
 
-        this.draggableEnableTimer = setTimeout(this.makeDraggable.bind(this), 50);
+        this.draggableEnableTimer = setTimeout(this.makeDraggable.bind(this), 20);
     }.bind(this));
 };
 
@@ -93,6 +94,7 @@ Widget.prototype.makeDivWidget = function() {
  */
 Widget.prototype.makeResizeable = function() {
     $(this.widget).resizable().resize(function() {
+        this.saveSize();
         // update on resize
         this.updateWidgetIn(100);
     }.bind(this));
@@ -167,23 +169,35 @@ Widget.prototype.updateWidgetIn = function(ms) {
  */
 Widget.prototype.updateWidget = function() {
 
+    if(this.fetchingID) {
+        this.updateWidgetIn(500);
+        return;
+    }
+
     if(this.updateWidgetTime != null) {
         this.updateWidgetTime = null;
     }
 
     if(!this.hasID) {
+        this.fetchingID = true;
         // Add a new widget
-        $.ajax('/php/db/addwidget.php?WidgetType=' + this.widgetType + '&OwnerID=' + this.site.ownerID + '&WidgetX=' + this.getX() + '&WidgetY=' + this.getY() + '&WidgetWidth=' + this.getWidth() + '&WidgetHeight=' + this.getHeight() + this.getWidgetMemForURL(), {
+        var url = '/php/db/addwidget.php?WidgetType=' + this.widgetType + '&OwnerToken=' + FB.getAuthResponse()['accessToken'] + '&WidgetX=' + this.getX() + '&WidgetY=' + this.getY() + '&WidgetWidth=' + this.getWidth() + '&WidgetHeight=' + this.getHeight() + this.getWidgetMemForURL();
+        console.log("adding by hitting " + url);
+        $.ajax(url, {
                 success: function(data) {
                     data = JSON.parse(data);
                     this.setID(data['_id']['$id']);
+                    this.hasID = true;
+                    console.log("Added new widget");
                 }.bind(this)
             });
 
 
-        this.hasID = true;
+
     } else {
-        $.ajax('/php/db/updatewidget.php?id=' + this.id + '&OwnerID=' + this.site.ownerID + '&WidgetX=' + this.getX() + '&WidgetY=' + this.getY() + '&WidgetWidth=' + this.getWidth() + '&WidgetHeight=' + this.getHeight() + this.getWidgetMemForURL(), {
+        var url = '/php/db/updatewidget.php?id=' + this.id + '&OwnerToken=' + FB.getAuthResponse()['accessToken'] + '&WidgetX=' + this.getX() + '&WidgetY=' + this.getY() + '&WidgetWidth=' + this.getWidth() + '&WidgetHeight=' + this.getHeight() + this.getWidgetMemForURL();
+        console.log("updating by hitting" + url);
+        $.ajax(url, {
                 success: function(data) {
                     console.log("Successful AJAX update for widget ID " + this.id);
                 }.bind(this)
@@ -222,6 +236,11 @@ Widget.prototype.getX = function() {
 
 Widget.prototype.getY = function() {
     return $(this.widget).offset()['top'];
+};
+
+Widget.prototype.saveSize = function() {
+    this._width = this.getWidth();
+    this._height = this.getHeight();
 };
 
 /**

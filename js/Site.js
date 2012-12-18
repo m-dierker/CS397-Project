@@ -118,7 +118,7 @@ Site.prototype.setupFacebook = function() {
  */
 Site.prototype.addBlankWidget = function() {
     console.log("adding widget");
-    var widget = new Widget(this);
+    // var widget = new Widget(this);
     widget.setSize(500,200);
 
     this.pushWidget(widget);
@@ -210,7 +210,9 @@ Site.prototype.setupDashboard = function() {
 
     // Hook all buttons adding a widget given a type
     $('#controls a.add-widget').click(function(e) {
-        var type = $(e.srcElement).attr("widget-type");
+        var type = $(e.target || e.srcElement).attr("widget-type");
+        console.log("ADDING A NEW WIDGET WITH TYPE: " + type);
+        console.log(e.target || e.srcElement);
         this.addNewWidgetWithType(type);
     }.bind(this));
 

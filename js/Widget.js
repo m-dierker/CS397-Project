@@ -96,7 +96,39 @@ Widget.prototype.makeResizeable = function() {
         // update on resize
         this.updateWidgetIn(100);
     }.bind(this));
+
+    // Add the click listener to the resize handle after it's gone through the DOM
+    setTimeout(function() {
+        $(this.widget).find('div.ui-icon-gripsmall-diagonal-se').dblclick(function() {
+            bootbox.confirm("Would you like to delete this widget?", function(confirmed) {
+                if(confirmed) {
+                    this.deleteWidget();
+                }
+            }.bind(this));
+        }.bind(this));
+    }.bind(this), 250);
 };
+
+Widget.prototype.deleteWidget = function() {
+    $(this.widget).remove();
+
+    $.ajax('/php/db/deletewidget.php?id=' + this.id, {
+        success: function() {
+            alertify.success('Widget deleted');
+        }
+    });
+
+    this.cleanup();
+
+
+};
+
+/**
+ * This can be overriden in a child class to end setIntervals and such
+ */
+Widget.prototype.cleanup = function() {
+
+}
 
 /**
  * Makes all the widgets on the page draggable. Should be called when a new widget is added or removed

@@ -19,17 +19,11 @@ Bus.prototype = Object.create(new Widget(), {
 
 Bus.prototype.initBusResults = function() {
     console.log(this.widget);
-    $(this.widget).append('<div class="bus-results"><hr class="bus-top-line"></div>');
-
-    setTimeout(this.addSelector.bind(this), 250);
-};
-
-Bus.prototype.addSelector = function() {
-
-    $(this.widget).find('.bus-results').prepend('<div class="select-container"><strong>Select a Stop: </strong><select></select></div>');
+    $(this.widget).append('<div class="bus-results"><div class="select-container"><strong>Select a Stop: </strong><select></select></div><hr class="bus-top-line"></div>');
 
     setTimeout(this.setupSelectChangeListener.bind(this), 500);
 };
+
 
 Bus.prototype.setupSelectChangeListener = function() {
     $(this.widget).find('select').change(function(e) {
@@ -47,7 +41,7 @@ Bus.prototype.initialLoadStopsForID = function(name, id) {
     this.loadStopsForID(name, id);
 
     setTimeout(this.setClickListener.bind(this), 500);
-    setInterval(this.updateWaitingTimes.bind(this), 5000);
+    this.waitingTimesChecker = setInterval(this.updateWaitingTimes.bind(this), 5000);
     // setInterval(updateListing, 60 * 5 * 1000);
 }
 
@@ -55,6 +49,7 @@ Bus.prototype.loadStopsForID = function(name, id) {
     this.mem['selectedStopID'] = id;
     this.mem['selectedStopName'] = name;
     this.updateWidgetIn(1000);
+    this.addStop(this.mem['selectedStopName'], this.mem['selectedStopID']);
     $.getJSON('http://developer.cumtd.com/api/v2.1/json/GetDeparturesByStop?key=c519e892e46841b8957ef39461faa6fb&stop_id=' + id + '&callback=?', function(data) {
 
         data['departures'].forEach(function(departure) {
@@ -62,9 +57,9 @@ Bus.prototype.loadStopsForID = function(name, id) {
         }.bind(this));
 
         this.setToCorrectSize();
-        setTimeout(function() {
-            this.addStop(this.mem['selectedStopName'], this.mem['selectedStopID'])
-        }.bind(this), 200);;
+        // setTimeout(function() {
+
+        // }.bind(this), 200);;
     }.bind(this));
 }
 
@@ -110,6 +105,10 @@ Bus.prototype.setClickListener = function() {
 Bus.prototype.addResult = function(departure) {
     $(this.widget).find('.bus-results').append('<div class="bus-result"><span class="bus-route-name">' + departure['headsign'] + '</span><span class="bus-route-expectedmin">' + departure['expected_mins'] + ' minutes</span><div class="bus-pulldown"><div class="bus-route-longname"><strong>Route: </strong><span class="bus-route-colored" style="color: #' + departure['route']['route_color'] +'">' + departure['route']['route_long_name'] + '</span></div><span class="bus-scheduled"><strong>Scheduled:</strong> ' + this.getFormattedTime(departure['scheduled']) + '</span><span class="bus-expected" time="' + departure['expected'] + '"><strong>Expected:</strong> ' + this.getFormattedTime(departure['expected']) + '</span></div></div><hr>');
 }
+
+Bus.prototype.cleanup = function() {
+    clearTimeout(this.waitingTimesChecker);
+};
 
 /**
  * Deletes all bus results

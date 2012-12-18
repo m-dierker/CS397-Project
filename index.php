@@ -17,6 +17,8 @@
     </style>
     <link href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" rel="stylesheet">
     <link href="/lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="/css/common/alertify.core.css" rel="stylesheet">
+    <link href="/css/common/alertify.default.css" rel="stylesheet">
     <link href="/css/site.css" rel="stylesheet">
     <link href="/js/widgets/cumtd/bus.css" rel="stylesheet">
 
@@ -116,6 +118,8 @@
     <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
     <script src="/js/common/date.js"></script>
     <script src="/js/common/datediff.js"></script>
+    <script src="/js/common/bootbox.min.js"></script>
+    <script src="/js/common/alertify.min.js"></script>
 
     <!-- Our scripts -->
     <script src="/js/Site.js"></script>

@@ -1,3 +1,12 @@
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    background: #fff url('/img/gray_jean.png') repeat;
+}
+
 /**
  * Main container
  */
@@ -39,16 +48,30 @@
  * Bottom right hand corner controls
  */
 #controls {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     right: 0;
+    z-index: 1000;
+}
+
+/* Icon Rotation */
+#controls i {
+    -webkit-transition: all .5s ease;
+}
+
+#controls:hover i{
+    -webkit-transform: rotate(-90deg);
+}
+
+#controls-hidden {
+    margin-bottom: 10px;
 }
 
 /**
  * General widget
  */
 .widget {
-    background-color: #aaa;
+    background-color: #fff;
     border-style: solid;
     border-width: 2px;
 }

@@ -17,7 +17,10 @@
     </style>
     <link href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" rel="stylesheet">
     <link href="/lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="/css/common/alertify.core.css" rel="stylesheet">
+    <link href="/css/common/alertify.default.css" rel="stylesheet">
     <link href="/css/site.css" rel="stylesheet">
+    <link href="/js/widgets/cumtd/bus.css" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -97,7 +100,10 @@
 
       <div id="controls" class="hide">
         <div class="well">
-          <a class="btn btn-small" href="#" id="add-widget-button"><i class="icon-plus"></i> Add a Widget</a>
+          <div id="controls-hidden" class="hide">
+            <a class="btn btn-small add-widget" widget-type="1" href="#" id="add-bus-widget-button"><i class="icon-plus" widget-type="1"></i>Bus Transit</a>
+          </div>
+          <a class="btn btn-small" href="#" id="add-widget-button"><i class=" icon-arrow-right"></i> Add a Widget</a>
         </div>
       </div>
 
@@ -106,12 +112,21 @@
       <!-- End Content -->
     </div>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!-- JS Libraries -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="//code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
     <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/common/date.js"></script>
+    <script src="/js/common/datediff.js"></script>
+    <script src="/js/common/bootbox.min.js"></script>
+    <script src="/js/common/alertify.min.js"></script>
+
+    <!-- Our scripts -->
     <script src="/js/Site.js"></script>
     <script src="/js/Widget.js"></script>
     <script src="/js/GlobalFunctions.js"></script>
 
+    <!-- Add Widgets Here -->
+    <script src="/js/widgets/cumtd/bus.js"></script>
   </body>
 </html>

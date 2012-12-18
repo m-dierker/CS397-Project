@@ -7,7 +7,7 @@
 }
 
 .bus-results .bus-result {
-    width: 400px;
+    width: 100%;
     padding: 18px 0;
 }
 
@@ -37,7 +37,7 @@
 }
 
 .bus-results hr{
-    width: 400px;
+    width: 100%;
     margin: 2px 0;
 }
 

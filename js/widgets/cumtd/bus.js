@@ -8,8 +8,8 @@ function Bus(site, id, db_data) {
     this.initBusResults();
     this.loadStops();
 
-    if(db_data['selectedStop'] !== undefined) {
-        this.initialLoadStopsForID(db_data['selectedStop']);
+    if(db_data['selectedStopID'] !== undefined) {
+        this.initialLoadStopsForID(db_data['selectedStopName'], db_data['selectedStopID']);
     }
 }
 
@@ -33,7 +33,7 @@ Bus.prototype.addSelector = function() {
 
 Bus.prototype.setupSelectChangeListener = function() {
     $(this.widget).find('select').change(function(e) {
-        this.initialLoadStopsForID($(e.srcElement).val());
+        this.initialLoadStopsForID($(e.srcElement).find('option:selected').html(), $(e.srcElement).val());
     }.bind(this));
 };
 
@@ -41,18 +41,19 @@ Bus.prototype.setupSelectChangeListener = function() {
  * Sets up everything needed for the first load for an ID. This should be called in every scenario for which new results are loaded. (Basically the only time loadStopsForID should be used is when refreshed results are coming in.f)
  * @param  {string} id the ID of the bus stop
  */
-Bus.prototype.initialLoadStopsForID = function(id) {
+Bus.prototype.initialLoadStopsForID = function(name, id) {
     this.clearResults();
 
-    this.loadStopsForID(id);
+    this.loadStopsForID(name, id);
 
     setTimeout(this.setClickListener.bind(this), 500);
     setInterval(this.updateWaitingTimes.bind(this), 5000);
     // setInterval(updateListing, 60 * 5 * 1000);
 }
 
-Bus.prototype.loadStopsForID = function(id) {
-    this.mem['selectedStop'] = id;
+Bus.prototype.loadStopsForID = function(name, id) {
+    this.mem['selectedStopID'] = id;
+    this.mem['selectedStopName'] = name;
     this.updateWidgetIn(1000);
     $.getJSON('http://developer.cumtd.com/api/v2.1/json/GetDeparturesByStop?key=c519e892e46841b8957ef39461faa6fb&stop_id=' + id + '&callback=?', function(data) {
 
@@ -61,6 +62,9 @@ Bus.prototype.loadStopsForID = function(id) {
         }.bind(this));
 
         this.setToCorrectSize();
+        setTimeout(function() {
+            this.addStop(this.mem['selectedStopName'], this.mem['selectedStopID'])
+        }.bind(this), 200);;
     }.bind(this));
 }
 
@@ -101,7 +105,7 @@ Bus.prototype.addResult = function(departure) {
 }
 
 Bus.prototype.clearResults = function() {
-    $(this.widget).find('.bus-results').empty().append('<hr class="top-line">');
+    $(this.widget).find('.bus-results .bus-result').remove();
 }
 
 Bus.prototype.getFormattedTime = function(time) {
@@ -115,7 +119,16 @@ Bus.prototype.loadStops = function() {
         var stops = data['stops'];
 
         stops.forEach(function(stop) {
-            $(this.widget).find('select').append($('<option>', {value: stop['stop_id']}).text(stop['stop_name']));
+            this.addStop(stop['stop_name'], stop['stop_id']);
         }.bind(this));
     }.bind(this));
+}
+
+Bus.prototype.addStop = function(name, id) {
+    var select = $(this.widget).find('select');
+    if($(select).find("option[value='" + id + "']").length == 0) {
+        $(select).append($('<option>', {value: id}).text(name));
+    } else {
+        console.log("NOT ADDING " + name);
+    }
 }

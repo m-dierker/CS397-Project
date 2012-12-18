@@ -1,0 +1,67 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Bus Widget</title>
+    <!-- Le styles -->
+    <link href="/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" rel="stylesheet">
+    <link href="/lib/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="/css/site.css" rel="stylesheet">
+    <link href="bus.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+
+    <select>
+    </select>
+
+    <div class="bus-results">
+        <hr class="top-line">
+        <div class="bus-result" style="display:none">
+            <span class="bus-route-name">
+                22N Illinihopper
+            </span>
+            <span class="bus-route-expectedmin">
+                5 minutes
+            </span>
+            <div class="bus-pulldown">
+                <div class="bus-route-longname">
+                    <strong>Route: </strong><span class="bus-route-colored" style="color: #ff8f0f">Orangehopper</span>
+                </div>
+                <span class="bus-scheduled">
+                    <strong>Scheduled:</strong> 10:45 AM
+                </span>
+                <span class="bus-expected">
+                    <strong>Expected:</strong> 10:45 AM
+                </span>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/common/date.js"></script>
+    <script src="/js/common/datediff.js"></script>
+    <script src="/js/Site.js"></script>
+    <script src="/js/Widget.js"></script>
+    <script src="/js/GlobalFunctions.js"></script>
+    <script src="bus.js"></script>
+
+    <script type="text/javascript">
+    // var bus = new Bus(null, '555', 10, 10, 500, 500, 1);
+    </script>
+
+  </body>
+</html>

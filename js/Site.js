@@ -57,6 +57,13 @@ Site.prototype.onLogout = function(response) {
 };
 
 Site.prototype.getExistingWidgets = function() {
+
+    if (this.widgetsRequested) {
+        return;
+    }
+
+    this.widgetsRequested = true;
+
     $.ajax({
         url: '/php/db/getuserswidgets.php?id=' + this.ownerID,
         success: function(data) {
@@ -70,17 +77,6 @@ Site.prototype.getExistingWidgets = function() {
             this.finishLoading();
         }.bind(this)
     });
-};
-
-/**
- * Adds an existing widget given a widget object from an AJAX request
- * @param {object} widget an object containing the DB request
- */
-Site.prototype.addExistingWidget = function(widget) {
-    var widget = new Widget(this, widget['_id']['$id'], widget['WidgetX'], widget['WidgetY'], widget['WidgetWidth'], widget['WidgetHeight'], ['WidgetType']);
-
-
-    this.pushWidget(widget);
 };
 
 /**
@@ -114,7 +110,7 @@ Site.prototype.setupFacebook = function() {
     FB.Event.subscribe('auth.authResponseChange', this.onAuthChange.bind(this));
 
     // Trigger it now
-    // FB.getLoginStatus(this.onAuthChange.bind(this));
+    FB.getLoginStatus(this.onAuthChange.bind(this));
 };
 
 /**
@@ -122,8 +118,51 @@ Site.prototype.setupFacebook = function() {
  */
 Site.prototype.addBlankWidget = function() {
     console.log("adding widget");
-    var widget = new Widget(this);
+    // var widget = new Widget(this);
     widget.setSize(500,200);
+
+    this.pushWidget(widget);
+};
+
+/**
+ * Adds a brand new widget with a given type
+ * @param {int} type The type of widget to add
+ */
+Site.prototype.addNewWidgetWithType = function(type) {
+    type = parseInt(type);
+
+    var widget;
+
+    switch(type) {
+        case 1: // bus widget
+            widget = new Bus(this, undefined, {});
+            widget.setSize(500, 500);
+            break;
+        default:
+            console.log("Invalid widget type specified: " + type);
+    }
+
+    this.pushWidget(widget);
+
+};
+
+/**
+ * Adds an existing widget given a widget object from an AJAX request
+ * @param {object} widget an object containing the DB request
+ */
+Site.prototype.addExistingWidget = function(data) {
+    var type = parseInt(data['WidgetType']);
+    var id = data['_id']['$id'];
+
+    var widget;
+
+    switch(type) {
+        case 1: // bus widget
+            widget = new Bus(this, id, data, type);
+            break;
+        default:
+            console.log("Invalid widget type specified: " + type);
+    }
 
     this.pushWidget(widget);
 };
@@ -148,8 +187,33 @@ Site.prototype.logout = function() {
  * Sets up the control listeners, shows things relevant, will load widgets, etc. Called on login.
  */
 Site.prototype.setupDashboard = function() {
-    console.log("setting up dashboard");
-    $('#add-widget-button').click(this.addBlankWidget.bind(this));
+
+    if (this.dashboardSetup) {
+        return;
+    }
+
+    console.log("Setting up dashboard");
+
+    this.dashboardSetup = true;
+
+    // Hidden controls come in when the add widget button is hovered n
+    $('#add-widget-button').hover(function() {
+
+        $('#controls-hidden').show("slide", {direction: "down"}, 200);
+
+    }, function() {});
+
+    // and they fade out when #controls is no longer hovered
+    $('#controls').hover(function() {}, function() {
+        $('#controls-hidden').hide("slide", {direction: "down"}, 200);
+    });
+
+    // Hook all buttons adding a widget given a type
+    $('#controls a.add-widget').click(function(e) {
+        var type = $(e.target || e.srcElement).attr("widget-type");
+        this.addNewWidgetWithType(type);
+    }.bind(this));
+
     $('#logout-button').click(this.logout.bind(this));
 };
 

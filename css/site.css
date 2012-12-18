@@ -54,6 +54,10 @@ body {
     z-index: 1000;
 }
 
+#controls hr {
+    margin: 2px 0;
+}
+
 #controls-hidden a {
     margin-bottom: 5px;
 }
@@ -63,7 +67,7 @@ body {
     -webkit-transition: all .5s ease;
 }
 
-#controls:hover a i.icon-arrow-right {
+#controls a:hover i.icon-arrow-right {
     -webkit-transform: rotate(-90deg);
 }
 

@@ -143,6 +143,10 @@ Site.prototype.addNewWidgetWithType = function(type) {
             widget = new Laundry(this, undefined, {});
             widget.setSize(300, 500);
             break;
+        case 3:
+            widget = new Weather(this, undefined, {});
+            widget.setSize(300, 300);
+            break;
         default:
             console.log("Invalid widget type specified: " + type);
     }
@@ -167,6 +171,9 @@ Site.prototype.addExistingWidget = function(data) {
             break;
         case 2: // laundry widget
             widget = new Laundry(this, id, data, type);
+            break;
+        case 3:
+            widget = new Weather(this, id, data, type);
             break;
         default:
             console.log("Invalid widget type specified: " + type);
@@ -233,9 +240,10 @@ Site.prototype.setupDashboard = function() {
 
 Site.prototype.flipDesktops = function() {
 
+    this.desktop = (this.desktop + 1 ) % 2;
+
     this.clearWidgets();
 
-    this.desktop = (this.desktop + 1 ) % 2;
     this.widgetsRequested = false;
 
     this.getExistingWidgets();

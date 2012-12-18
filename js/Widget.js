@@ -175,6 +175,11 @@ Widget.prototype.updateWidgetIn = function(ms) {
  */
 Widget.prototype.updateWidget = function() {
 
+    if(this.desktop != this.site.desktop) {
+        console.log("Cancelling because background update");
+        return;
+    }
+
     if(this.fetchingID) {
         this.updateWidgetIn(500);
         return;

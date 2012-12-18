@@ -8,6 +8,12 @@ function Widget() {
 Widget.prototype.setupWidget = function(site, id, db_data, type) {
     this.site = site;
 
+    if(db_data['WidgetDesktop'] === undefined) {
+        this.desktop = site.desktop;
+    } else {
+        this.desktop = db_data['WidgetDesktop'];
+    }
+
     this.widgetType = type;
 
     var newWidget = false;
@@ -181,7 +187,7 @@ Widget.prototype.updateWidget = function() {
     if(!this.hasID) {
         this.fetchingID = true;
         // Add a new widget
-        var url = '/php/db/addwidget.php?WidgetType=' + this.widgetType + '&OwnerToken=' + FB.getAuthResponse()['accessToken'] + '&WidgetX=' + this.getX() + '&WidgetY=' + this.getY() + '&WidgetWidth=' + this.getWidth() + '&WidgetHeight=' + this.getHeight() + this.getWidgetMemForURL();
+        var url = '/php/db/addwidget.php?WidgetType=' + this.widgetType + '&WidgetDesktop=' + this.desktop + '&OwnerToken=' + FB.getAuthResponse()['accessToken'] + '&WidgetX=' + this.getX() + '&WidgetY=' + this.getY() + '&WidgetWidth=' + this.getWidth() + '&WidgetHeight=' + this.getHeight() + this.getWidgetMemForURL();
         console.log("adding by hitting " + url);
         $.ajax(url, {
                 success: function(data) {

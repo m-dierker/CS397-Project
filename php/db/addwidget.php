@@ -3,7 +3,7 @@ if (empty($_GET)) die();
 
 $newJSONString = json_encode($_GET);
 
-$baseElements = array("WidgetType", "OwnerToken", "WidgetX", "WidgetY", "WidgetWidth", "WidgetHeight");
+$baseElements = array("WidgetType", "OwnerToken", "WidgetX", "WidgetY", "WidgetWidth", "WidgetHeight", "WidgetDesktop");
 
 for ($i = 0; $i < count($baseElements); $i += 1) {
 	if (array_key_exists($baseElements[$i], $_GET) == false) {

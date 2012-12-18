@@ -26,6 +26,9 @@ Site.prototype.onAuthChange = function(response) {
 Site.prototype.onLogin = function(response) {
     this.ownerID = response.authResponse.userID;
 
+    console.log("Setting desktop");
+    this.desktop = 0;
+
     this.getExistingWidgets();
 
     this.setupDashboard();
@@ -63,9 +66,9 @@ Site.prototype.getExistingWidgets = function() {
     }
 
     this.widgetsRequested = true;
-
-    $.ajax({
-        url: '/php/db/getuserswidgets.php?id=' + this.ownerID,
+    var url = '/php/db/getuserswidgets.php?id=' + this.ownerID+ '&desktop=' + this.desktop;
+    console.log("Hitting " + url);
+    $.ajax(url, {
         success: function(data) {
             console.log("Loading User Widgets");
             console.log(data);
@@ -83,9 +86,7 @@ Site.prototype.getExistingWidgets = function() {
  * Hides all widgets
  */
 Site.prototype.hideAllWidgets = function() {
-    for(var i = 0; i < this.widgets.length; i++) {
-        $(this.widgets[i]).hide();
-    }
+    $('.widget').remove();
 }
 
 /**
@@ -221,7 +222,24 @@ Site.prototype.setupDashboard = function() {
         this.addNewWidgetWithType(type);
     }.bind(this));
 
+    $('#change-desktops-button').click(function(e) {
+
+        this.flipDesktops();
+
+    }.bind(this));
+
     $('#logout-button').click(this.logout.bind(this));
+};
+
+Site.prototype.flipDesktops = function() {
+
+    this.clearWidgets();
+
+    this.desktop = (this.desktop + 1 ) % 2;
+    this.widgetsRequested = false;
+
+    this.getExistingWidgets();
+
 };
 
 /**

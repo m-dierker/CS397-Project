@@ -14,7 +14,7 @@ Laundry.prototype = Object.create(new Widget(), {
 });
 
 Laundry.prototype.initLaundry = function() {
-    $(this.widget).append('<div class="laundry"><select class="hallSelect"><option value="Forbes">Forbes</option><option value="Nugent">Nugent</option><option value="Snyder">Snyder</option></select><table class="table table-striped"><tr><th>Machine Number</th><th>Machine Status</th></tr></table></div>');
+    $(this.widget).append('<div class="laundry"><select class="hallSelect"><option></option><option value="Forbes">Forbes</option><option value="Nugent">Nugent</option><option value="Snyder">Snyder</option></select><table class="table table-striped"><tr><th>Machine Number</th><th>Machine Status</th></tr></table></div>');
 
     setTimeout(this.setupSelectChangeListener.bind(this), 500);
 };

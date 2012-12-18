@@ -6,7 +6,7 @@ try
     $database   = $connection->selectDB('testmongo');
     $collection = $database->selectCollection('test');
     $js = "function() {
-    return this.OwnerID == " . $_GET['id'] . "}";
+    return this.OwnerID == " . $_GET['id'] . " && this.WidgetDesktop == " . $_GET['desktop'] . "}";
     $cursor = $collection->find(array('$where' => $js));
 
     $results = array();

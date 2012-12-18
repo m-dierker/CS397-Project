@@ -107,6 +107,7 @@
             <a class="btn btn-small add-widget" widget-type="1" href="#" id="add-bus-widget-button"><i class="icon-road" widget-type="1"></i>Bus Transit</a>
           </div>
           <a class="btn btn-small" href="#" id="add-widget-button"><i class=" icon-arrow-right"></i> Add a Widget</a>
+          <a class="btn btn-small" href="#" id="change-desktops-button">Change Desktops</a>
         </div>
       </div>
 

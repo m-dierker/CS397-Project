@@ -101,7 +101,7 @@
       <div id="controls" class="hide">
         <div class="well">
           <div id="controls-hidden" class="hide">
-            <a class="btn btn-small add-widget" widget-type="1" href="#" id="add-bus-widget-button"><i class="icon-plus"></i>Bus Transit</a>
+            <a class="btn btn-small add-widget" widget-type="1" href="#" id="add-bus-widget-button"><i class="icon-plus" widget-type="1"></i>Bus Transit</a>
           </div>
           <a class="btn btn-small" href="#" id="add-widget-button"><i class=" icon-arrow-right"></i> Add a Widget</a>
         </div>

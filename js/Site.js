@@ -211,8 +211,6 @@ Site.prototype.setupDashboard = function() {
     // Hook all buttons adding a widget given a type
     $('#controls a.add-widget').click(function(e) {
         var type = $(e.target || e.srcElement).attr("widget-type");
-        console.log("ADDING A NEW WIDGET WITH TYPE: " + type);
-        console.log(e.target || e.srcElement);
         this.addNewWidgetWithType(type);
     }.bind(this));
 

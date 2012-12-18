@@ -142,10 +142,10 @@ Widget.prototype.makeDraggable = function() {
             $(this).addClass('noclick');
         },
         drag: function() {
-            this.updateWidgetIn(100);
+            // this.updateWidgetIn(50);
         }.bind(this),
         stop: function(e) {
-            this.updateWidgetIn(100);
+            this.updateWidgetIn(50);
         }.bind(this),
         distance: 30
     });
@@ -188,6 +188,7 @@ Widget.prototype.updateWidget = function() {
                     data = JSON.parse(data);
                     this.setID(data['_id']['$id']);
                     this.hasID = true;
+                    this.fetchingID = false;
                     console.log("Added new widget");
                 }.bind(this)
             });

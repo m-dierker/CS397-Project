@@ -77,7 +77,7 @@ Bus.prototype.updateWaitingTimes = function() {
 
         // It's possible for the bus system to predict less minutes than the time would say. In that event, we're going to go with the bus system.
         if(parseInt($(expectedMin).text()) > diff) {
-            $(this).find('.bus-route-expectedmin').text(diff + (diff == 1 ? "minute" : " minutes"));
+            $(this).find('.bus-route-expectedmin').text(diff + (diff == 1 ? " minute" : " minutes"));
         }
     });
 }

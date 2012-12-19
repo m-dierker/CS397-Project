@@ -153,6 +153,10 @@ Site.prototype.addNewWidgetWithType = function(type) {
             widget = new Weather(this, undefined, {});
             widget.setSize(300, 300);
             break;
+        case 4:
+            widget = new Notepad(this, undefined, {});
+            widget.setSize(100, 100);
+            break;
         default:
             console.log("Invalid widget type specified: " + type);
     }
@@ -178,8 +182,11 @@ Site.prototype.addExistingWidget = function(data) {
         case 2: // laundry widget
             widget = new Laundry(this, id, data, type);
             break;
-        case 3:
+        case 3: // weather
             widget = new Weather(this, id, data, type);
+            break;
+        case 4: // notepad
+            widget = new Notepad(this, id, data, type);
             break;
         default:
             console.log("Invalid widget type specified: " + type);

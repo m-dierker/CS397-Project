@@ -23,6 +23,7 @@
     <link href="/js/widgets/cumtd/bus.css" rel="stylesheet">
     <link href="/js/widgets/laundry/laundry.css" rel="stylesheet">
     <link href="/js/widgets/weather/weather.css" rel="stylesheet">
+    <link href="/js/widgets/textarea/textarea.css" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -103,6 +104,8 @@
       <div id="controls" class="hide">
         <div class="well">
           <div id="controls-hidden" class="hide">
+            <a class="btn btn-small add-widget" widget-type="4" href="#"><i class="icon-plus" widget-type="4"></i>Notepad</a>
+            <br>
             <a class="btn btn-small add-widget" widget-type="3" href="#"><i class="icon-leaf" widget-type="3"></i>Weather</a>
             <br>
             <a class="btn btn-small add-widget" widget-type="2" href="#"><i class="icon-tint" widget-type="2"></i>Laundry Monitor</a>
@@ -137,5 +140,6 @@
     <script src="/js/widgets/cumtd/bus.js"></script>
     <script src="/js/widgets/laundry/laundry.js"></script>
     <script src="/js/widgets/weather/weather.js"></script>
+    <script src="/js/widgets/textarea/textarea.js"></script>
   </body>
 </html>
